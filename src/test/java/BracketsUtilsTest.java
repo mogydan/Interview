@@ -4,7 +4,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BracketsUtilsTest {
     private final BracketsUtils bracketsUtils = new BracketsUtils();
@@ -12,7 +12,7 @@ class BracketsUtilsTest {
     @ParameterizedTest
     @MethodSource("getBracketsCases")
     void areBracketsBalanced(String inputString, boolean isBalanced) {
-        assertEquals(bracketsUtils.areBracketsBalanced(inputString), isBalanced);
+        assertThat(bracketsUtils.areBracketsBalanced(inputString)).isEqualTo(isBalanced);
     }
 
     private static Stream<Arguments> getBracketsCases() {

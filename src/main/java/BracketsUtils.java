@@ -8,20 +8,20 @@ public class BracketsUtils {
     private static final List<Character> allowedClosedBrackets = Arrays.asList(')', '}', ']');
 
     public boolean areBracketsBalanced(String inputString) {
-        Deque<Character> openBracketsStack = new ArrayDeque<>();
+        Deque<Character> openBracketsQueue = new ArrayDeque<>();
         for (char ch : inputString.toCharArray()) {
             if (isOpenBracket(ch)) {
-                openBracketsStack.push(ch);
+                openBracketsQueue.addLast(ch);
             }
             if (isClosedBracket(ch)) {
-                if (hasAppropriateOpenBracket(openBracketsStack, ch)) {
-                    openBracketsStack.pop();
+                if (hasAppropriateOpenBracket(openBracketsQueue, ch)) {
+                    openBracketsQueue.removeLast();
                 } else {
                     return false;
                 }
             }
         }
-        return openBracketsStack.isEmpty();
+        return openBracketsQueue.isEmpty();
     }
 
     private boolean isOpenBracket(char ch) {
@@ -32,11 +32,11 @@ public class BracketsUtils {
         return allowedClosedBrackets.contains(ch);
     }
 
-    private boolean hasAppropriateOpenBracket(Deque<Character> openBracketsStack, char closedBracket) {
-        if (openBracketsStack.isEmpty()) {
+    private boolean hasAppropriateOpenBracket(Deque<Character> openBracketsQueue, char closedBracket) {
+        if (openBracketsQueue.isEmpty()) {
             return false;
         }
-        char openedBracket = openBracketsStack.peekFirst();
+        char openedBracket = openBracketsQueue.getLast();
         if (closedBracket == ')') {
             return openedBracket == '(';
         }
